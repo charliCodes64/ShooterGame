@@ -8,6 +8,7 @@ weapon::~weapon()
 {
 	al_destroy_bitmap(image);
 }
+
 weapon::weapon()
 {
 	speed = 10;
