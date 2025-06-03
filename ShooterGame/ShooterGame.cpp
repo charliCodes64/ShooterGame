@@ -50,7 +50,6 @@ int main(void)
 
 	srand(time(NULL));
 
-
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_display_event_source(display));
@@ -64,7 +63,7 @@ int main(void)
 		if (ev.type == ALLEGRO_EVENT_TIMER)
 		{
 			redraw = true;
-			int x = myPlayer.getX();
+			int x = myPlayer.getX(); //these are used to pass current position back to player class so they can be used for player collision
 			int y = myPlayer.getY();
  			if (keys[UP])
 				myPlayer.MoveUp();
@@ -75,12 +74,11 @@ int main(void)
 			if (keys[RIGHT])
 				myPlayer.MoveRight(WIDTH);
 
-				myPlayer.CollidePlayer(BadGuys, NUM_BadGuyS, x, y);
-
 			for (int i = 0;i < NUM_weapons;i++)
 				weapons[i].Updateweapon(WIDTH, HEIGHT);
 			for (int i = 0;i < NUM_BadGuyS;i++)
 				BadGuys[i].StartBadGuy(WIDTH, HEIGHT);
+			myPlayer.CollidePlayer(BadGuys, NUM_BadGuyS, x, y); //checking collision as each bad boi spawns
 			for (int i = 0;i < NUM_weapons;i++)
 				weapons[i].Collideweapon(BadGuys, NUM_BadGuyS);
 		}
@@ -114,7 +112,7 @@ int main(void)
 			case ALLEGRO_KEY_SPACE:
 				keys[SPACE] = true;
 				for (int i = 0;i < NUM_weapons;i++)
-					weapons[i].Fireweapon(myPlayer, dir);
+					weapons[i].Fireweapon(myPlayer, dir);//passing around dir so Fireweapon knows which direction to launch from 
 				break;
 			}
 		}

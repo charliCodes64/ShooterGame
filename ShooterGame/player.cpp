@@ -20,7 +20,7 @@ player::player(int HEIGHT)
 	for (int i = 0;i < 4; i++)
 	{
 		 
-		image[i] = al_create_bitmap(64, 64);
+	image[i] = al_create_bitmap(64, 64);
 	al_set_target_bitmap(image[i]);
 	x = 20;
 	y = HEIGHT / 2;
@@ -60,7 +60,7 @@ player::player(int HEIGHT)
 	}
 }
 
-int player::getDirection()
+int player::getDirection()//similar to lab 6 arrow.cp im passing direction around to use in CollidePlayer
 {
 	return dir;
 }
@@ -68,42 +68,22 @@ void player::DrawPlayer()
 {
 	al_draw_bitmap(image[getDirection()], getX(), getY(), 0);
 }
-void player::CollidePlayer(BadGuy BadGuys[], int size, int oldX, int oldY)
+void player::CollidePlayer(BadGuy BadGuys[], int cSize, int priorX, int priorY)
 {
-	bool collided = false;
-
-	for (int j = 0; j < size; j++)
-	{
-		if (BadGuys[j].getLive())
+		for (int j = 0; j < cSize; j++)//recycled the same logic from Collideweapon in weapon.cpp 
 		{
-			bool collisionX = x + boundx > BadGuys[j].getX() && x < BadGuys[j].getX() + BadGuys[j].getBoundX();
-			bool collisionY = y + boundy > BadGuys[j].getY() && y < BadGuys[j].getY() + BadGuys[j].getBoundY();
-
-			if (collisionX && collisionY)
+			if (BadGuys[j].getLive())
 			{
-				collided = true;
-
-				switch (dir) {
-				case 0: //Up
-					if (y < oldY)
-						y = oldY;
-					break;
-				case 1: //Right
-					if (x > oldX) 
-						x = oldX;
-					break;
-				case 2: //Down
-					if (y > oldY) 
-						y = oldY;
-					break;
-				case 3: //Left
-					if (x < oldX) 
-						x = oldX;
-					break;
+				if (x > (BadGuys[j].getX() - BadGuys[j].getBoundX()) &&
+					x < (BadGuys[j].getX() + BadGuys[j].getBoundX()) &&
+					y >(BadGuys[j].getY() - BadGuys[j].getBoundY()) &&
+					y < (BadGuys[j].getY() + BadGuys[j].getBoundY()))
+				{
+					x = priorX;//passed back from main this allows the player to stay at their "prior" really current location once their cordinates match a bad guys
+					y = priorY;
 				}
 			}
 		}
-	}
 }
 void player::MoveUp()
 {

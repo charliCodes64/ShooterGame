@@ -23,7 +23,6 @@ weapon::weapon()
 	al_draw_filled_rectangle(0, 25, 64, 39, al_map_rgb(0, 255, 255));
 	al_draw_filled_rectangle(25, 0, 39, 64, al_map_rgb(0, 255, 255));
 	al_draw_circle(32, 32, 8, al_map_rgb(100, 100, 100), 5);
-
 	al_draw_line(0, 32, 64, 32, al_map_rgb(100, 100, 255), 2);
 	al_draw_line(32, 0, 32, 64, al_map_rgb(100, 100, 255), 2);
 	al_draw_circle(32, 32, 16, al_map_rgb(200, 200, 200), 5);
@@ -40,7 +39,7 @@ void weapon::Drawweapon()
 {
 
 	if (live) {
-		al_draw_scaled_rotated_bitmap(image, 32, 32, x, y, .5, .5, angle, 0);
+		al_draw_scaled_rotated_bitmap(image, 32, 32, x, y, .5, .5, angle, 2);
 		angle += .1;
 	}
 }
@@ -48,7 +47,7 @@ void weapon::Fireweapon(player& Player, int directionOfFreedom)
 {
 	if (!live)
 	{
-		x = Player.getX() + Player.getBoundX() / 2;
+		x = Player.getX() + Player.getBoundX() / 2; //changed so the center is used to lauch sphere of freedom
 		y = Player.getY() + Player.getBoundY() / 2;
 		live = true;
 		dir = directionOfFreedom;
@@ -81,8 +80,7 @@ void weapon::Updateweapon(int WIDTH, int HEIGHT)
 		}
 	}
 }
-void weapon::Collideweapon(BadGuy BadGuys[], int cSize)// check name
-{
+void weapon::Collideweapon(BadGuy BadGuys[], int cSize){
 	if (live)
 	{
 		for (int j = 0; j < cSize; j++)

@@ -9,7 +9,7 @@ public:
 	~weapon();
 	void Drawweapon();
 	void Fireweapon(player& Player, int directionOfFreedom);
-	void Updateweapon(int WIDTH, int HEIGHT);//added to allow n s
+	void Updateweapon(int WIDTH, int HEIGHT);//added to allow weapen to switch direction of fire based on direction player last moves 
 	void Collideweapon(BadGuy BadGuys[], int cSize);
 private:
 	int dir;

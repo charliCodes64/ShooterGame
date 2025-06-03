@@ -15,7 +15,7 @@ public:
 	void MoveDown(int HEIGHT );
 	void MoveLeft( );
 	void MoveRight(int WIDTH );
-	void CollidePlayer(BadGuy BadGuys[], int size, int oldX, int oldY);//reused from weapons
+	void CollidePlayer(BadGuy BadGuys[], int cSize, int oldX, int oldY);//reused from weapons
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
 	int getX() { return x; }
