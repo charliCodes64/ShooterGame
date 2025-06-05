@@ -35,36 +35,33 @@ void BadGuy::DrawBadGuy()
 }
 void BadGuy::StartBadGuy(int WIDTH, int HEIGHT)
 {
-    static BadGuy* allBadGuys[5];
+    static BadGuy* allBadGuys[5];//the pointer is used to allow the track of multiple badguys
     static int count = 0;
-    bool getBadGuyStatus = false;
 
-    //checking to see if a badboy is able to fit within the 5 limit cap
-    if (!getBadGuyStatus && count < 5) {
-        allBadGuys[count++] = this; //increments array as spots open up
+    //used to add a new badguy if less than 5 are live
+    if (count < 5) {
+        allBadGuys[count++] = this;//then yes add badguy 
     }
 
-    //handle spawning points
-    if (!live && rand() % 100 == 0) { 
+    //looking for spawn points
+    if (!live && rand() % 100 == 0) {
         do {
-            x = rand() % (WIDTH - boundx); //x and y are used to randomly select locations on the map for the badGuys to spawn
+            x = rand() % (WIDTH - boundx);//setting rand coords
             y = rand() % (HEIGHT - boundy);
 
             bool valid = true;
-            for (int i = 0; i < count && valid; i++) {
-                BadGuy* getSpawnedBadGuys = allBadGuys[i];//for all badguys that are live
-                //in the if statement im checking the location of where the new badguy can spawn and if his borders and inline with other 
-                //badguys borders it will not be a valid location to spawn in 
-                if (getSpawnedBadGuys != this && getSpawnedBadGuys->live && x + boundx > getSpawnedBadGuys->x && x < getSpawnedBadGuys->x + getSpawnedBadGuys->boundx &&
-                     y + boundy > getSpawnedBadGuys->y && y < getSpawnedBadGuys->y + getSpawnedBadGuys->boundy) {
+            for (int i = 0; i < count; i++) {
+                BadGuy* badGuyAt = allBadGuys[i];
+                //if x != x and the other x is alive check coords if overlap cant spawn 
+                if (badGuyAt != this && (*badGuyAt).live && x + boundx > (*badGuyAt).x && x < (*badGuyAt).x + (*badGuyAt).boundx &&
+                    y + boundy >(*badGuyAt).y && y < (*badGuyAt).y + (*badGuyAt).boundy) {
                     valid = false;
                 }
             }
-            //after a valid location is found the badguy can be drawn to the screen
             if (valid) {
                 live = true;
-                break; 
+                break;
             }
-        } while (true); 
+        } while (true);
     }
 }

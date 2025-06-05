@@ -4,7 +4,7 @@
 #include "player.h"
 #include "BadGuy.h"
 #include "weapon.h"
-
+//Charlton Infiger
 int main(void)
 {
 	const int WIDTH = 800;
@@ -27,14 +27,14 @@ int main(void)
 	ALLEGRO_TIMER* timer = NULL;
 
 	//Initialization Functions
-	if (!al_init())										//initialize Allegro
+	if (!al_init()) {								//initialize Allegro
 		return -1;
-
+	}
 	display = al_create_display(WIDTH, HEIGHT);			//create our display object
 
-	if (!display)										//test display object
+	if (!display) {									//test display object
 		return -1;
-
+	}
 	al_init_primitives_addon();
 	al_install_keyboard();
 	al_init_image_addon();
@@ -78,7 +78,7 @@ int main(void)
 				weapons[i].Updateweapon(WIDTH, HEIGHT);
 			for (int i = 0;i < NUM_BadGuyS;i++)
 				BadGuys[i].StartBadGuy(WIDTH, HEIGHT);
-			myPlayer.CollidePlayer(BadGuys, NUM_BadGuyS, x, y); //checking collision as each bad boi spawns
+			    myPlayer.CollidePlayer(BadGuys, NUM_BadGuyS, x, y); //checking collision at each bad boi spawn
 			for (int i = 0;i < NUM_weapons;i++)
 				weapons[i].Collideweapon(BadGuys, NUM_BadGuyS);
 		}
